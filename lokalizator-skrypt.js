@@ -4,7 +4,7 @@ import { getFirestore, collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc
 
 // --- KONFIGURACJA ---
 const firebaseConfig = {
-  apiKey: "AIzaSyC9g76-SeUy-rQwNy4oaMI1-TusiRhZfXo", // Klucz do Firebase
+  apiKey: "AIzaSyC9g76-SeUy-rQwNy4oaMI1-TusiRhZfXo", // Klucz do Firebase (może być publiczny)
   authDomain: "lokalizator-a76bd.firebaseapp.com",
   projectId: "lokalizator-a76bd",
   storageBucket: "lokalizator-a76bd.appspot.com",
@@ -13,8 +13,8 @@ const firebaseConfig = {
   measurementId: "G-FGXDSSBYH6"
 };
 
-// Klucz do Gemini API - ten, który właśnie wygenerowałeś
-const geminiApiKey = "AIzaSyDw0v8d_UHP1g433CzE3IVNP_Nff9LwDGs";
+// Klucz do Gemini API - NOWY, OGRANICZONY KLUCZ
+const geminiApiKey = "AIzaSyCwkKjG01Qnp537MGlbsTbeMkJ2662QIqE";
 
 // --- ZMIENNE GLOBALNE ---
 let itemsCollectionRef;
@@ -231,4 +231,4 @@ async function executeDatabaseAction(res) {
             showToast("Nie zrozumiałem polecenia.", 'error');
             break;
     }
-}
+              }
