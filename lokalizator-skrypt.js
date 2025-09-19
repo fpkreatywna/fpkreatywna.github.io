@@ -13,9 +13,6 @@ const firebaseConfig = {
   measurementId: "G-FGXDSSBYH6"
 };
 
-// WAŻNE: Wklej tutaj swój klucz API z Google AI Studio
-const apiKey = "AIzaSyBrFlCwRFr0PxPVNSJUCMPXYV7UZI8GtBUnFg";
-
 // --- ZMIENNE GLOBALNE ---
 let itemsCollectionRef;
 let localItemsCache = [];
@@ -146,6 +143,8 @@ async function processCommandWithAI(command) {
     const fullPrompt = `${systemPrompt}\n\nPolecenie użytkownika: "${command}"`;
     const schema = { type: "OBJECT", properties: { action: { type: "STRING", enum: ["add", "update", "find", "delete", "unknown", "add_or_update"] }, itemName: { type: "STRING" }, location: { type: "STRING" } } };
     try {
+        // ---- OSTATECZNA POPRAWKA JEST TUTAJ ----
+        const apiKey = firebaseConfig.apiKey; // Używamy klucza z naszej konfiguracji
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -236,5 +235,3 @@ async function executeDatabaseAction(res) {
             break;
     }
 }
-
-
