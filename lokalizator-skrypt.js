@@ -3,9 +3,16 @@ import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.g
 import { getFirestore, collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 // --- KONFIGURACJA ---
-const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "DEMO", authDomain: "DEMO", projectId: "DEMO" };
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-const apiKey = "";
+// Ten klucz jest teraz na stałe wpisany i łączy aplikację z Twoim projektem "Lokalizator"
+const firebaseConfig = {
+  apiKey: "AIzaSyC9g76-SeUy-rQwNy4oaMI1-TusiRhZfXo",
+  authDomain: "lokalizator-a76bd.firebaseapp.com",
+  projectId: "lokalizator-a76bd",
+  storageBucket: "lokalizator-a76bd.appspot.com",
+  messagingSenderId: "1021436619523",
+  appId: "1:1021436619523:web:6591409d3f3776baee1736",
+  measurementId: "G-FGXDSSBYH6"
+};
 
 // --- ZMIENNE GLOBALNE ---
 let itemsCollectionRef;
@@ -25,7 +32,8 @@ async function startApp() {
         const auth = getAuth(app);
         const db = getFirestore(app);
         setLogLevel('error');
-        itemsCollectionRef = collection(db, `artifacts/${appId}/public/data/items`);
+        // Używamy teraz prostej, głównej kolekcji w Twojej nowej bazie danych
+        itemsCollectionRef = collection(db, "items");
         
         authStatusSpan.textContent = "Logowanie do bazy danych...";
         if (auth.currentUser === null) {
@@ -227,3 +235,4 @@ async function executeDatabaseAction(res) {
             break;
     }
 }
+
