@@ -4,7 +4,7 @@ import { getFirestore, collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc
 
 // --- KONFIGURACJA ---
 const firebaseConfig = {
-  apiKey: "AIzaSyC9g76-SeUy-rQwNy4oaMI1-TusiRhZfXo",
+  apiKey: "AIzaSyC9g76-SeUy-rQwNy4oaMI1-TusiRhZfXo", // Klucz do Firebase
   authDomain: "lokalizator-a76bd.firebaseapp.com",
   projectId: "lokalizator-a76bd",
   storageBucket: "lokalizator-a76bd.appspot.com",
@@ -12,6 +12,9 @@ const firebaseConfig = {
   appId: "1:1021436619523:web:6591409d3f3776baee1736",
   measurementId: "G-FGXDSSBYH6"
 };
+
+// Klucz do Gemini API - ten, który właśnie wygenerowałeś
+const geminiApiKey = "AIzaSyDw0v8d_UHP1g433CzE3IVNP_Nff9LwDGs";
 
 // --- ZMIENNE GLOBALNE ---
 let itemsCollectionRef;
@@ -35,11 +38,7 @@ async function startApp() {
         
         authStatusSpan.textContent = "Logowanie do bazy danych...";
         if (auth.currentUser === null) {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await signInWithCustomToken(auth, __initial_auth_token);
-            } else {
-                await signInAnonymously(auth);
-            }
+            await signInAnonymously(auth);
         }
         
         authStatusSpan.textContent = "Połączono ze wspólną bazą danych.";
@@ -143,9 +142,7 @@ async function processCommandWithAI(command) {
     const fullPrompt = `${systemPrompt}\n\nPolecenie użytkownika: "${command}"`;
     const schema = { type: "OBJECT", properties: { action: { type: "STRING", enum: ["add", "update", "find", "delete", "unknown", "add_or_update"] }, itemName: { type: "STRING" }, location: { type: "STRING" } } };
     try {
-        // ---- OSTATECZNA POPRAWKA JEST TUTAJ ----
-        const apiKey = firebaseConfig.apiKey; // Używamy klucza z naszej konfiguracji
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${geminiApiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }], generationConfig: { responseMimeType: "application/json", responseSchema: schema } })
