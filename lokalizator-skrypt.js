@@ -3,7 +3,6 @@ import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.g
 import { getFirestore, collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 // --- KONFIGURACJA ---
-// Ten klucz jest teraz na stałe wpisany i łączy aplikację z Twoim projektem "Lokalizator"
 const firebaseConfig = {
   apiKey: "AIzaSyC9g76-SeUy-rQwNy4oaMI1-TusiRhZfXo",
   authDomain: "lokalizator-a76bd.firebaseapp.com",
@@ -13,6 +12,9 @@ const firebaseConfig = {
   appId: "1:1021436619523:web:6591409d3f3776baee1736",
   measurementId: "G-FGXDSSBYH6"
 };
+
+// WAŻNE: Wklej tutaj swój klucz API z Google AI Studio
+const apiKey = "AIzaSyBrFlCwRFr0PxPVNSJUCMPXYV7UZI8GtBUnFg";
 
 // --- ZMIENNE GLOBALNE ---
 let itemsCollectionRef;
@@ -32,7 +34,6 @@ async function startApp() {
         const auth = getAuth(app);
         const db = getFirestore(app);
         setLogLevel('error');
-        // Używamy teraz prostej, głównej kolekcji w Twojej nowej bazie danych
         itemsCollectionRef = collection(db, "items");
         
         authStatusSpan.textContent = "Logowanie do bazy danych...";
@@ -235,4 +236,5 @@ async function executeDatabaseAction(res) {
             break;
     }
 }
+
 
